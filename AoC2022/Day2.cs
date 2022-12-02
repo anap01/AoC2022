@@ -3,7 +3,7 @@ namespace AoC2022;
 [TestClass]
 public class Day2 : AoCTestClass
 {
-    private readonly Dictionary<(string, string), int> _mResult1 = new()
+    private readonly Dictionary<(string, string), int> _result1 = new()
     {
         { ("A", "X"), 1 + 3},
         { ("A", "Y"), 2 + 6},
@@ -16,7 +16,7 @@ public class Day2 : AoCTestClass
         { ("C", "Z"), 3 + 3},
     };
     
-    private readonly Dictionary<(string, string), int> _mResult2 = new()
+    private readonly Dictionary<(string, string), int> _result2 = new()
     {
         { ("A", "X"), 0 + 3},
         { ("A", "Y"), 3 + 1},
@@ -38,7 +38,7 @@ public class Day2 : AoCTestClass
         while (stringReader.ReadLine() is { } line)
         {
             var round = line.Split(" ");
-            score += _mResult1[(round[0], round[1])];
+            score += _result1[(round[0], round[1])];
         }
 
         TestContext.WriteLine($"{score}");
@@ -53,7 +53,7 @@ public class Day2 : AoCTestClass
         while (stringReader.ReadLine() is { } line)
         {
             var round = line.Split(" ");
-            score += _mResult2[(round[0], round[1])];
+            score += _result2[(round[0], round[1])];
         }
 
         TestContext.WriteLine($"{score}");
