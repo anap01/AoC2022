@@ -2,7 +2,7 @@ namespace AoC2022
 {
     public class AoCTestClass
     {
-        protected TestContext TestContext { get; set; }
+        public TestContext TestContext { get; set; }
 
         protected string DayInput
         {
