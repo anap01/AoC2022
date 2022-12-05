@@ -2,7 +2,7 @@ namespace AoC2022
 {
     public class AoCTestClass
     {
-        public TestContext TestContext { get; set; }
+        protected TestContext TestContext { get; set; }
 
         protected string DayInput()
         {
@@ -12,14 +12,15 @@ namespace AoC2022
                 client.GetStringAsync($"https://adventofcode.com/2022/day/{GetType().Name[3..]}/input").Result;
             return input.Trim();
         }
-        
-        protected IEnumerable<string> DayInputLines() {
-            return InputLines(DayInput());
-        }
-        
-        protected IEnumerable<string> InputLines(string str) {
+    }
+    
+    public static class StringExtensions {
+
+        public static IEnumerable<string> EnumerateLines(this string str)
+        {
             using var reader = new StringReader(str);
-            while (reader.ReadLine() is { } line) {
+            while (reader.ReadLine() is { } line)
+            {
                 yield return line;
             }
         }

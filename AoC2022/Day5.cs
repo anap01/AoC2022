@@ -9,7 +9,7 @@ public class Day5 : AoCTestClass
     public void Part1()
     {
         const int noCrates = 9;
-        var input = DayInputLines();
+        var input = DayInput().EnumerateLines();
         var crateInput = input.Take(8).Reverse();
         var crates = new Stack<char>[noCrates];
         for (var i = 0; i < noCrates; i++)
@@ -49,7 +49,7 @@ public class Day5 : AoCTestClass
     public void Part2()
     {
         const int noCrates = 9;
-        var input = DayInputLines();
+        var input = DayInput().EnumerateLines();
         var crateInput = input.Take(8).Reverse();
         var crates = new Stack<char>[noCrates];
         for (var i = 0; i < noCrates; i++)
