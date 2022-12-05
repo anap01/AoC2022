@@ -2,6 +2,7 @@ namespace AoC2022
 {
     public class AoCTestClass
     {
+        // ReSharper disable once MemberCanBeProtected.Global
         public TestContext TestContext { get; set; }
 
         protected string DayInput
