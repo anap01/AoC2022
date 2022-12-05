@@ -1,7 +1,7 @@
 namespace AoC2022;
 
 [TestClass]
-public class Day : AoCTestClass
+public class Day6 : AoCTestClass
 {
     [TestMethod]
     public void Part1()
@@ -10,14 +10,14 @@ public class Day : AoCTestClass
         input = TestInput.EnumerateLines();
         TestContext.Write($"");
     }
-
+    
     [TestMethod]
     public void Part2()
     {
         var input = DayInput.EnumerateLines();
         input = TestInput.EnumerateLines();
-        TestContext.Write($"");
-    }
-
+        TestContext.Write($"");    }
+    
     private const string TestInput = @"";
+    
 }

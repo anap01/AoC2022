@@ -6,7 +6,7 @@ public class Day1 : AoCTestClass
     [TestMethod]
     public void Part1()
     {
-        var input = DayInput();
+        var input = DayInput;
         var stringReader = new StringReader(input);
         var max = 0;
         var current = 0;
@@ -36,7 +36,7 @@ public class Day1 : AoCTestClass
 
     private IEnumerable<int> Calories()
     {
-        var input = DayInput();
+        var input = DayInput;
         var stringReader = new StringReader(input);
         var current = 0;
         while (stringReader.ReadLine() is { } line)

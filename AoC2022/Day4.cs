@@ -6,7 +6,7 @@ public class Day4 : AoCTestClass
     [TestMethod]
     public void Part1()
     {
-        var input = DayInput().EnumerateLines();
+        var input = DayInput.EnumerateLines();
         var pairs = 0;
         foreach (var line in input)
         {
@@ -26,7 +26,7 @@ public class Day4 : AoCTestClass
     [TestMethod]
     public void Part2()
     {
-        var input = DayInput().EnumerateLines();
+        var input = DayInput.EnumerateLines();
         var pairs = 0;
         foreach (var line in input)
         {

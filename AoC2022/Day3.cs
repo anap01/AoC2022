@@ -6,7 +6,7 @@ public class Day3 : AoCTestClass
     [TestMethod]
     public void Part1()
     {
-        var input = DayInput();
+        var input = DayInput;
         var stringReader = new StringReader(input);
         var score = 0;
         while (stringReader.ReadLine() is { } line)
@@ -23,7 +23,7 @@ public class Day3 : AoCTestClass
     [TestMethod]
     public void Part2()
     {
-        var input = DayInput();
+        var input = DayInput;
         var stringReader = new StringReader(input);
         var score = 0;
         var previous = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
