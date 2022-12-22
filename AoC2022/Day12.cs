@@ -9,25 +9,36 @@ public class Day12 : AoCTestClass
         var input = DayInput.EnumerateLines();
         // input = TestInput.EnumerateLines();
         var heightmap = input.Select(r => r.ToArray()).ToArray();
-        var start = Find('S');
-        heightmap[start.y][start.x] = 'a';
-        var end = Find('E');
-        heightmap[end.y][end.x] = 'z';
-        (int x, int y) Find(char c)
+        var start = Find('S', heightmap).Single();
+        heightmap[start.row][start.col] = 'a';
+        var end = Find('E', heightmap).Single();
+        heightmap[end.row][end.col] = 'z';
+
+        var score = FindShortestPath(start, end, heightmap);
+        TestContext.WriteLine($"{score}");
+    }
+
+    [TestMethod]
+    public void Part2()
+    {
+        var input = DayInput.EnumerateLines();
+        // input = TestInput.EnumerateLines();
+        var heightmap = input.Select(r => r.ToArray()).ToArray();
+        var start = Find('S', heightmap).Single();
+        heightmap[start.row][start.col] = 'a';
+        var end = Find('E', heightmap).Single();
+        heightmap[end.row][end.col] = 'z';
+
+        var min = int.MaxValue;
+        foreach (var altStart in Find('a', heightmap))
         {
-            for (var row = 0; row < heightmap.Length; row++)
-            {
-                for (var col = 0; col < heightmap[row].Length; col++)
-                {
-                    if (heightmap[row][col] == c)
-                    {
-                        return (col, row);
-                    }
-                }
-            }
-            throw new Exception("Start not found");
+            min = Math.Min(min, FindShortestPath(altStart, end, heightmap));
         }
-        
+        TestContext.WriteLine($"{min}");
+    }
+
+    private int FindShortestPath((int x, int y) start, (int x, int y) end, char[][] heightmap)
+    {
         var openSet = new Dictionary<(int x, int y), int>();
         openSet[start] = 0;
         var visited = new HashSet<(int, int)>();
@@ -36,8 +47,7 @@ public class Day12 : AoCTestClass
             var minScore = openSet.Values.Min();
             var (node, score) = openSet.First(kvp => kvp.Value == minScore);
             if (node == end)
-                TestContext.WriteLine($"{score}");
-
+                return score;
             openSet.Remove(node);
             visited.Add(node);
             foreach (var dest in Destinations(node).Where(n => !visited.Contains(n)))
@@ -65,21 +75,29 @@ public class Day12 : AoCTestClass
                     yield return (node.x, node.y - 1);
                 if (node.y < heightmap.Length - 1 && Reachable(coord.x, coord.y + 1))
                     yield return (node.x, node.y + 1);
-                
+
                 bool Reachable(int x, int y)
                 {
                     return heightmap[y][x] - currentElevation <= 1;
                 }
             }
         }
+
+        return int.MaxValue;
     }
 
-    [TestMethod]
-    public void Part2()
+    private IEnumerable<(int col, int row)> Find(char c, char[][] heightmap)
     {
-        var input = DayInput.EnumerateLines();
-        input = TestInput.EnumerateLines();
-        TestContext.Write($"");
+        for (var row = 0; row < heightmap.Length; row++)
+        {
+            for (var col = 0; col < heightmap[row].Length; col++)
+            {
+                if (heightmap[row][col] == c)
+                {
+                    yield return (col, row);
+                }
+            }
+        }
     }
 
     private const string TestInput = @"Sabqponm
