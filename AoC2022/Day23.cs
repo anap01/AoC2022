@@ -101,8 +101,62 @@ public class Day23 : AoCTestClass
     public void Part2()
     {
         var input = DayInput.EnumerateLines();
-        input = TestInput.EnumerateLines();
-        TestContext.Write($"");
+        // input = TestInput2.EnumerateLines();
+        var elves = input.SelectMany((line, row) => line.Select((c, col) => (c, col)).Where(c => c.c == '#').Select((c) => (row, c.col))).ToHashSet();
+        var dir = new[] { 'N', 'S', 'W', 'E' };
+
+        
+        for (int round = 0; ; round++)
+        {
+            var proposal = new Dictionary<(int row, int col), (int row, int col)>();
+
+            bool moved = false;
+            foreach (var elf in elves)
+            {
+                var occupiedDirs = GetOccupiedDirs(elf).ToList();
+                if (occupiedDirs.Count == 0)
+                    continue;
+
+                for (int i = 0; i < 4; i++)
+                {
+                    var direction = dir[(round + i) % 4];
+                    if (occupiedDirs.Contains(direction) == false)
+                    {
+                        proposal[elf] = GetPosition(direction, elf);
+                        break;
+                    }
+                }
+            }
+
+            var groupBy = proposal.GroupBy(kvp => kvp.Value);
+            foreach (var destination in groupBy)
+            {
+                if (destination.Count() > 1)
+                    continue;
+
+                var keyValuePair = destination.Single();
+                elves.Remove(keyValuePair.Key);
+                elves.Add(keyValuePair.Value);
+                moved = true;
+            }
+            if (moved == false)
+            {
+                TestContext.WriteLine($"{round + 1}");
+                break;
+            }
+        }
+
+        IEnumerable<char> GetOccupiedDirs((int row, int col) elf)
+        {
+            if (elves.Any(e => e.row == elf.row - 1 && e.col >= elf.col - 1 && e.col <= elf.col + 1))
+                yield return 'N';
+            if (elves.Any(e => e.row == elf.row + 1 && e.col >= elf.col - 1 && e.col <= elf.col + 1))
+                yield return 'S';
+            if (elves.Any(e => e.col == elf.col - 1 && e.row >= elf.row - 1 && e.row <= elf.row + 1))
+                yield return 'W';
+            if (elves.Any(e => e.col == elf.col + 1 && e.row >= elf.row - 1 && e.row <= elf.row + 1))
+                yield return 'E';
+        }
     }
 
     private const string TestInput = @".....
